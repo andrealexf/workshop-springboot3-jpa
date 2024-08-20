@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projetowebservices.course.entities.enums.OrderStatus;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +33,8 @@ public class Order implements Serializable{
 	@JoinColumn(name = "client_id")
 	private User client;
 	
-	private Integer orderStatus;
+	@Enumerated(EnumType.STRING)
+	private OrderStatus orderStatus;
 	
 	public Order() {
 	}
@@ -40,7 +43,8 @@ public class Order implements Serializable{
 		super();
 		this.id = id;
 		this.moment = moment;
-		setOrderStatus(orderStatus);
+		this.orderStatus = orderStatus;
+		//setOrderStatus(orderStatus);
 		this.client = client;
 	}
 
@@ -68,16 +72,16 @@ public class Order implements Serializable{
 		this.client = client;
 	}
 
-	public OrderStatus getOrderStatus() {
-		return OrderStatus.valueOf(orderStatus);//convertendo o numero int da classe para orderStaus
-	}
-
-	public void setOrderStatus(OrderStatus orderStatus) {
-		
-		if(orderStatus != null) {
-			this.orderStatus = orderStatus.getCode();
-		}
-	}
+//	public OrderStatus getOrderStatus() {
+//		return OrderStatus.valueOf(orderStatus);//convertendo o numero int da classe para orderStaus
+//	}
+//
+//	public void setOrderStatus(OrderStatus orderStatus) {
+//		
+//		if(orderStatus != null) {
+//			this.orderStatus = orderStatus.getCode();
+//		}
+//	}
 
 	@Override
 	public int hashCode() {
