@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -19,10 +19,11 @@ public class Product implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private Integer id;
 	
+	@Id
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String name ;
 	private String description;
 	private Double price;
@@ -30,7 +31,7 @@ public class Product implements Serializable{
 	
 	@ManyToMany
 	@JoinTable(name = "tb_product_category", //table cria uma tabela para quando é manyToMany
-	joinColumns = @JoinColumn(name = "product_id"),//cria coluna
+	joinColumns = @JoinColumn(name = "product_name"),//cria coluna
 	inverseJoinColumns = @JoinColumn(name = "category_id")) //inverseJoinCol. é para referênciar o mapeamento do category
 	private Set<Category> categories = new HashSet<>(); //set é um conjunto. um mesmo produto não pode ter mais de uma categoria
 	
