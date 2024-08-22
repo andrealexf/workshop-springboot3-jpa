@@ -35,4 +35,19 @@ public class UserService {
 		
 		repository.deleteById(id);
 	}
+	
+	public User update(Long id, User obj){
+		
+		User entity = repository.getReferenceById(id);//deixa um objeto preparado para mexer, mas não insere ainda no banco de dados
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	private void updateData(User entity, User obj) {
+
+		entity.setName(obj.getName()); //name do entity vira o name do obj
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+
+	}
 }
