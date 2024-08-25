@@ -23,4 +23,14 @@ public class ResourceExceptionHandler {
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
+	
+	@ExceptionHandler(DatabaseException.class)
+	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request){
+	//o método vai interceptar qualquer exceção do tipo "ResourceNotFound" e fazer o tratamento:
+		
+		String error = "Database error";
+		HttpStatus status = HttpStatus.BAD_REQUEST;//passar o status para value (muda para integer)
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
 }
