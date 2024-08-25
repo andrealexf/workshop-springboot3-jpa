@@ -12,6 +12,8 @@ import com.projetowebservices.course.entities.User;
 import com.projetowebservices.course.repositories.UserRepository;
 import com.projetowebservices.course.resources.exceptions.DatabaseException;
 import com.projetowebservices.course.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
  
 @Service
 public class UserService {
@@ -42,15 +44,6 @@ public class UserService {
 			throw new ResourceNotFoundException(id);
 		}
 		
-//		try {
-//			
-//			repository.deleteById(id);
-//				
-//		} catch (ResourceNotFoundException e) {
-//		
-//			throw new ResourceNotFoundException(id);
-//		}
-		
 		try {
 			repository.deleteById(id);
 
@@ -66,9 +59,16 @@ public class UserService {
 	
 	public User update(Long id, User obj){
 		
-		User entity = repository.getReferenceById(id);//deixa um objeto preparado para mexer, mas não insere ainda no banco de dados
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			
+			User entity = repository.getReferenceById(id);//deixa um objeto preparado para mexer, mas não insere ainda no banco de dados
+			updateData(entity, obj);
+			return repository.save(entity);
+			
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+
+		}
 	}
 
 	private void updateData(User entity, User obj) {
